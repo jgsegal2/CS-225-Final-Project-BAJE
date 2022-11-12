@@ -10,7 +10,13 @@
 
 using std::string;
 
-typedef string Vertex;
+//typedef string Vertex;
+
+struct Vertex{
+   double latitude_;
+   double longitude_;
+   std::stirng airport_;
+}
 
 /**
  * Represents an edge in a graph; used by the Graph class.
