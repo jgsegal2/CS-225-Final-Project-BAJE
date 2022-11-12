@@ -3,7 +3,7 @@
 
 void read_in_file(){
   std::ifstream file(//need file name);
-  for(std::string line; std::getline(ifs, line); line=""){
+  for(std::string line; std::getline(file, line); line=""){
     int comma_count= 0;
     std::string location;
     std::string latitude;
@@ -24,7 +24,7 @@ void read_in_file(){
       //}
       }
     }
-    
+
     double lat_d=std::stod(latitude);
     double long_d=std::stod(longitude);
     //need to figure out where to store these (variable) //want to use graph from lab with slight modifications (need to talk to team)
