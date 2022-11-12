@@ -2,7 +2,7 @@
 #include <string>
 
 void read_in_file(){
-  std::ifstream file(//need file name);
+  std::ifstream file(/../airports.dat);
   for(std::string line; std::getline(file, line); line=""){
     int comma_count= 0;
     std::string location;
@@ -13,6 +13,7 @@ void read_in_file(){
       if (on==','){
         comma_count++;
       }else{
+        //if country is US
       //if(comma_count == // location number){
       // location.push_back(on)
       //}
