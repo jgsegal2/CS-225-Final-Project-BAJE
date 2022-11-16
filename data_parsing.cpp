@@ -4,10 +4,12 @@
 void read_in_file(){
   std::ifstream file(/../airports.dat);
   for(std::string line; std::getline(file, line); line=""){
-    int comma_count= 0;
+    //int comma_count= 0;
     std::string location;
     std::string latitude;
     std:string longitude;
+    std::vector <std::string> vect;
+    
     for(int i=0; i<line.size(); i++){
       char on= line.at(i);
       if (on==','){
