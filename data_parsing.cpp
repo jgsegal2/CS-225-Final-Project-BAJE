@@ -33,16 +33,12 @@ void read_in_file(){
     }
   }
 }
-// double calculate_weight(orgin, dest) {
-//   double a = -6.081689834590001 * PI / 180.0; // lat 1
-//   double b = -5.20707988739 * PI / 180.0; // long 1
-//   double x = 145.391998291 * PI / 180.0; // lat 2
-//   double y = 145.789001465 * PI / 180.0; // long 2
-//   double r = 6378.1;
-
-//   double param, result;
-//   param = 60.0;
-//   double d = r * acos(cos(a) * cos(b) * cos(x - y) + sin(a) * sin(b));
-//   printf ("The great circle distance is %f km.\n", d );
-//   return 0;
-// }
+double calculate_weight(Vertex orgin, Vertex dest) {
+  double a = coords[orgin].first * PI / 180.0; // lat 1
+  double b = coords[orgin].second * PI / 180.0; // long 1
+  double x = coords[dest].first * PI / 180.0; // lat 2
+  double y = coords[dest].second * PI / 180.0; // long 2
+  double r = 6378.1; // radius in km   
+  double d = r * acos(cos(a) * cos(b) * cos(x - y) + sin(a) * sin(b));
+  return d;
+}
