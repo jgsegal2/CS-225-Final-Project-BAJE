@@ -2,7 +2,7 @@
 #include <string>
 
 void read_in_file(){
-  //vertexes
+  //vertcies
   std::ifstream file(/../airports.dat);
   for(std::string line; std::getline(file, line); line=""){
     //int comma_count= 0;
