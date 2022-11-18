@@ -4,7 +4,7 @@
 
 #define PI 3.14159265
 
-void read_in_file(){
+void FlightFinder::read_in_file(){
   //vertcies
   std::ifstream file(/../airports.dat);
   for(std::string line; std::getline(file, line); line=""){
