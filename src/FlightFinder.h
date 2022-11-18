@@ -9,7 +9,7 @@ class FlightFinder{
     public:
     
     void read_in_file();
-    void calculate_weights();
+    void calculate_weights(Vertex orgin, Vertex dest);
     //@return bool if the two places (vertices) are connected
     bool BFS(std::string orgin, std::string destination);
     //@return 5 closest lower distances and 5 closest huigher distances based on input
