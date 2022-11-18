@@ -156,7 +156,7 @@ public:
      * @return - if edge exists, return edge wright
      *         - if doesn't, return InvalidWeight
      */
-    int getEdgeWeight(Vertex source, Vertex destination) const;
+    double getEdgeWeight(Vertex source, Vertex destination) const;
 
     /**
      * Inserts a new vertex into the graph and initializes its label as "".
@@ -199,7 +199,7 @@ public:
      * @return - if edge exists, set edge weight and return  edge with new weight
      *         - if not, return InvalidEdge
      */
-    Edge setEdgeWeight(Vertex source, Vertex destination, int weight);
+    Edge setEdgeWeight(Vertex source, Vertex destination, double weight);
 
     /**
      * Creates a name for snapshots of the graph.
