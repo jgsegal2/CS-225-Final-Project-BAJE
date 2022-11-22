@@ -1,3 +1,4 @@
+#include "FLightFinder.h"
 #include <fstream>
 #include <string>
 #include <math.h>       /* cos */
