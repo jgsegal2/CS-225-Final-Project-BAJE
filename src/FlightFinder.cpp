@@ -1,4 +1,5 @@
 #include "FlightFinder.h"
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <math.h>       /* cos */
@@ -6,8 +7,8 @@
 #define PI 3.14159265
 
 void FlightFinder::read_in_file(){
-  //vertcies
-  std::ifstream file(/../airports.dat);
+  //vertcies/workspaces/cs225/Final Project/airports.dat
+  std::ifstream file("/../airports.dat");
   for(std::string line; std::getline(file, line); line=""){
     //int comma_count= 0;
     std::vector <std::string> vect;
@@ -20,21 +21,21 @@ void FlightFinder::read_in_file(){
 
   }
   //edges
-  std::ifstream file2(/../routes.dat);
+  std::ifstream file2("/../routes.dat");
   for(std::string line; std::getline(file2, line); line=""){
     std::vector <std::string> vect;
     SplitString(line, ',', vect);
-    Vertex orgin(vect.at(2);
+    Vertex orgin(vect.at(2));
     Vertex dest(vect.at(4));
-    if(vertexExists(orgin) && vertexExists(dest)){
+    if(g_.vertexExists(orgin) && g_.vertexExists(dest)){
       g_.insertEdge(orgin, dest);
-      double weight= calculate_weight(orgin, dest); //need to ask Benson to change function, seems most efficient to do this here in the initialization
+      double weight= calculate_weights(orgin, dest); 
       g_.setEdgeWeight(orgin, dest, weight);
       
     }
   }
 }
-double FlightFinder::calculate_weight(Vertex orgin, Vertex dest) {
+double FlightFinder::calculate_weights(Vertex orgin, Vertex dest) {
   double a = coords[orgin].first * PI / 180.0; // lat 1
   double b = coords[dest].first * PI / 180.0; // lat 2
   double x = coords[orgin].second * PI / 180.0; // long 1
