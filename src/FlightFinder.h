@@ -9,7 +9,7 @@ class FlightFinder{
     public:
     
     void read_in_file();
-    void calculate_weights(Vertex orgin, Vertex dest);
+    double calculate_weights(Vertex orgin, Vertex dest);
     //@return bool if the two places (vertices) are connected
     bool BFS(std::string orgin, std::string destination);
     //@return 5 closest lower distances and 5 closest huigher distances based on input
@@ -17,6 +17,9 @@ class FlightFinder{
     //@return a vector containing the path of airports traveled to along with the distance attached as the last component of the vector
     std::vector <std::string> a_star(std::string orgin, std::string destination);
     
+    //Test functions
+    
+
     private:
     Graph g_;
     std::map<std::string, std::pair<double,double>> coords;
