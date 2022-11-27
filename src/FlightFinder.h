@@ -8,6 +8,7 @@
 class FlightFinder{
     public:
     
+    FlightFinder();
     void read_in_file();
     double calculate_weights(Vertex orgin, Vertex dest);
     //@return bool if the two places (vertices) are connected
@@ -18,7 +19,14 @@ class FlightFinder{
     std::vector <std::string> a_star(std::string orgin, std::string destination);
     
     //Test functions
-    
+    //return true if greater than the number inputted exist 
+    bool test_number_of_vertices(int num);
+    //return true if  number ov vertices for a given vertex is equal to num and false otherwise
+    bool test_number_of_edges_on_vertex(Vertex v, int num);
+    //returns true if vertex exists
+    bool test_vertex_existance(Vertex v);
+    //returns true if edge exists
+    bool test_edge_exists(Vertex o, Vertex d);
 
     private:
     Graph g_;
