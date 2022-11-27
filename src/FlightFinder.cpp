@@ -44,3 +44,29 @@ double FlightFinder::calculate_weights(Vertex orgin, Vertex dest) {
   double d = r * acos(cos(a) * cos(b) * cos(x - y) + sin(a) * sin(b));
   return d;
 }
+
+//return true if greater than the number inputted exist 
+bool FlightFinder::test_number_of_vertices(int num){
+  if (g_.getVertices().size()>=num){
+    return true;
+  }
+  return false;
+}
+
+//return true if  number ov vertices for a given vertex is equal to num and false otherwise
+bool FlightFinder::test_number_of_edges_on_vertex(Vertex v, int num){
+  if(g_.getAdjacent(v).size()==num){
+    return true;
+  }
+  return false;
+}
+
+//returns true if vertex exists
+bool FlightFinder::test_vertex_existance(Vertex v){
+  return g_.vertexExists(v);
+}
+
+//returns true if edge exists
+bool FlightFinder::test_edge_exists(Vertex o, Vertex d){
+  return g_.edgeExists(o,d);
+}
