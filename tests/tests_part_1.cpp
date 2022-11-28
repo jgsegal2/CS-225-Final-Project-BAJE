@@ -78,9 +78,8 @@ TEST_CASE("BFS", "[part=2] [BFS]") {
 TEST_CASE("weights", "[part=3] [weights]") {
     FlightFinder obj;
     obj.read_in_file();
-    //
-    // REQUIRE(obj.BFS("JNU","COS")); //Juno ALaska to Colorado Springs
-    // REQUIRE(obj.BFS("BTI","CMI")); // BarterIsland Alaska to Champign,IL 
-    // REQUIRE(obj.BFS("MEX","CMI")==false); // Mexico to Champaign
-    // REQUIRE(obj.BFS("LFI","ORD")==false); // Langley Airforce Base in Hampton US to Chicago O'Hare
+    // Juneau to Anchorage distance = 915.9240554118511 km
+    REQUIRE(obj.edge_weight("JNU","ANC") > 900.0); //Juneau to Anchorage
+    REQUIRE(obj.edge_weight("JNU","ANC") < 950.0); //Juneau to Anchorage
 }
+
