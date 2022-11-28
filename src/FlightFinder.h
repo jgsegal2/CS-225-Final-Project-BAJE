@@ -28,6 +28,8 @@ class FlightFinder{
     bool test_vertex_existance(Vertex v);
     //returns true if edge exists
     bool test_edge_exists(Vertex o, Vertex d);
+    //return the weight of the edge
+    double edge_weight(Vertex o, Vertex d);
 
     private:
     Graph g_;
