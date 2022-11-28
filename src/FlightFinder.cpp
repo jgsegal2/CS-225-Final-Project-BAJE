@@ -6,22 +6,23 @@
 
 #define PI 3.14159265
 
+using namespace std;
+
 void FlightFinder::read_in_file(){
-  //vertcies/workspaces/cs225/Final Project/airports.dat
-  std::ifstream file("/../airports.dat");
+  std::ifstream file("../airports.dat");
   for(std::string line; std::getline(file, line); line=""){
-    //int comma_count= 0;
     std::vector <std::string> vect;
     SplitString(line, ',', vect);
-    int SplitString(const std::string & str1, char sep, std::vector<std::string> &fields);
-    if (vect.at(3).compare("United States")==0 && vect.at(4).compare("") != 0){
+    if (vect.at(3).compare("\"United States\"")==0 && vect.at(4).compare("\\N") != 0){
+      vect.at(4)= vect.at(4).substr(1,vect.at(4).length()-2);
       g_.insertVertex(Vertex(vect.at(4)));
+      //std::cout<< vect.at(4) << std::endl;
       coords[vect.at(4)] = std::pair<double, double> (std::stod(vect.at(6)), std::stod(vect.at(7)));
     }
 
   }
   //edges
-  std::ifstream file2("/../routes.dat");
+  std::ifstream file2("../routes.dat");
   for(std::string line; std::getline(file2, line); line=""){
     std::vector <std::string> vect;
     SplitString(line, ',', vect);
@@ -69,4 +70,61 @@ bool FlightFinder::test_vertex_existance(Vertex v){
 //returns true if edge exists
 bool FlightFinder::test_edge_exists(Vertex o, Vertex d){
   return g_.edgeExists(o,d);
+}
+
+
+bool FlightFinder::BFS(std::string origin, std::string destination)
+{
+
+    if (origin == destination)
+    {
+        return true;
+    }
+
+
+    map<Vertex, bool> map;
+
+    for (const Vertex &v : g_.getVertices())
+    {
+        map[v] = false;
+    }
+
+
+    // Create a queue for BFS
+    std::queue<string> q;
+
+
+    map[origin] = true;
+    q.push(origin);
+
+    while (!q.empty())
+    {
+        // Deq a vertex from q and print it
+        origin = q.front();
+        q.pop();
+
+        // Get all adjacent vertices of the dequeued vertex s
+        // If a adjacent has not been visited, then mark it visited
+        // and enqueue it
+
+        vector<Vertex> adj = g_.getAdjacent(origin);
+        for (auto vertices: adj)
+        {
+            // If this adjacent node is the destination node, then
+            // return true
+            if (vertices == destination) {
+                return true;
+            }
+
+            // Else, continue to do BFS
+            if (!map[vertices])
+            {
+                map[vertices] = true;
+                q.push(vertices);
+            }
+        }
+    }
+
+    // If BFS is complete without visiting destination
+    return false;
 }
