@@ -1,12 +1,12 @@
 #include <catch2/catch_test_macros.hpp>
-#include "tests_helper.h"
+//#include "tests_helper.h"
 
 #include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include "src/FlightFinder.h"
+#include "FlightFinder.h"
 
 
 
