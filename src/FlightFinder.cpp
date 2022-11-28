@@ -29,7 +29,7 @@ void FlightFinder::read_in_file(){
     Vertex dest(vect.at(4));
     if(g_.vertexExists(orgin) && g_.vertexExists(dest)){
       g_.insertEdge(orgin, dest);
-      double weight= calculate_weights(orgin, dest); 
+      double weight = calculate_weights(orgin, dest); 
       g_.setEdgeWeight(orgin, dest, weight);
       
     }
@@ -46,7 +46,7 @@ double FlightFinder::calculate_weights(Vertex orgin, Vertex dest) {
 }
 
 //return true if greater than the number inputted exist 
-bool FlightFinder::test_number_of_vertices(int num){
+bool FlightFinder::test_number_of_vertices(unsigned num){
   if (g_.getVertices().size()>=num){
     return true;
   }
@@ -54,7 +54,7 @@ bool FlightFinder::test_number_of_vertices(int num){
 }
 
 //return true if  number ov vertices for a given vertex is equal to num and false otherwise
-bool FlightFinder::test_number_of_edges_on_vertex(Vertex v, int num){
+bool FlightFinder::test_number_of_edges_on_vertex(Vertex v, unsigned num){
   if(g_.getAdjacent(v).size()==num){
     return true;
   }
