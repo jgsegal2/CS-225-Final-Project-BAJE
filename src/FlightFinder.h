@@ -8,7 +8,7 @@
 class FlightFinder{
     public:
     
-    FlightFinder();
+    FlightFinder(): g_(true, true) {};
     void read_in_file();
     double calculate_weights(Vertex orgin, Vertex dest);
     //@return bool if the two places (vertices) are connected
@@ -20,9 +20,9 @@ class FlightFinder{
     
     //Test functions
     //return true if greater than the number inputted exist 
-    bool test_number_of_vertices(int num);
+    bool test_number_of_vertices(unsigned num);
     //return true if  number ov vertices for a given vertex is equal to num and false otherwise
-    bool test_number_of_edges_on_vertex(Vertex v, int num);
+    bool test_number_of_edges_on_vertex(Vertex v, unsigned num);
     //returns true if vertex exists
     bool test_vertex_existance(Vertex v);
     //returns true if edge exists
