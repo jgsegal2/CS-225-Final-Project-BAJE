@@ -72,6 +72,9 @@ bool FlightFinder::test_edge_exists(Vertex o, Vertex d){
   return g_.edgeExists(o,d);
 }
 
+double FlightFinder::edge_weight(Vertex o, Vertex d) {
+  return g_.getEdgeWeight(o,d);
+}
 
 bool FlightFinder::BFS(std::string origin, std::string destination)
 {
