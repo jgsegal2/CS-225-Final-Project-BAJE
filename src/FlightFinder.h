@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <queue>
 #include "utils.h"
 
 class FlightFinder{
