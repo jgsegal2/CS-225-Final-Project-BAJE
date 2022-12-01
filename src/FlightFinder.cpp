@@ -133,12 +133,80 @@ bool FlightFinder::BFS(std::string origin, std::string destination)
 }
 
 
-std::vector <std::string> FlightFinder::ReconstructPath(const std::map<Vertex,Vertex>& previous, Vertex curr){
+std::vector<std::string> FlightFinder::a_star(std::string origin, std::string destination)
+{
+  vector<Vertex> openSet;
+  openSet.push_back(origin);
+
+  vector<Vertex> closedSet;
+
+  map<Vertex, Vertex> cameFrom;
+
+  map<Vertex, double> g_Score;
+  g_Score[origin] = 0;
+
+  double tentative_g_Score;
+
+  map<Vertex, double> f_Score;
+  f_Score[origin] = calculate_weights(origin, destination);
+
+  while (!openSet.empty())
+  {
+
+    Vertex current = openSet[0];
+
+    for (int i = 0; i < openSet.size(); ++i)
+    {
+      if (f_Score[openSet[i]] < f_Score[current])
+      {
+        current = openSet[i];
+      }
+    }
+
+    if (current == destination)
+    {
+      return ReconstructPath(cameFrom, current);
+    }
+
+    openSet.erase(openSet.begin());
+    closedSet.push_back(current);
+
+    vector<Vertex> neighbors = g_.getAdjacent(current);
+
+    for (auto neighbor : neighbors)
+    {
+      if (!(std::find(closedSet.begin(), closedSet.end(), neighbor) != closedSet.end()))
+      {
+        tentative_g_Score = g_Score[current] + g_.getEdgeWeight(current, neighbor);
+      }
+
+      if (std::find(openSet.begin(), openSet.end(), neighbor) != openSet.end())
+      {
+        if (tentative_g_Score < g_Score[neighbor])
+        {
+          cameFrom[neighbor] = current;
+          g_Score[neighbor] = tentative_g_Score;
+          f_Score[neighbor] = tentative_g_Score + calculate_weights(neighbor, destination);
+        }
+        else
+        {
+          g_Score[neighbor] = tentative_g_Score;
+          openSet.push_back(neighbor);
+        }
+      }
+    }
+  }
+  return vector<Vertex>();
+}
+
+std::vector<std::string> FlightFinder::ReconstructPath(const std::map<Vertex, Vertex> &previous, Vertex curr)
+{
   std::vector<std::string> path;
   path.push_back(curr);
-  while(previous.at(curr).compare("")!=0){
-    curr=previous.at(curr);
-    path.insert(path.begin(),curr);
+  while (previous.at(curr).compare("") != 0)
+  {
+    curr = previous.at(curr);
+    path.insert(path.begin(), curr);
   }
   return path;
 }
