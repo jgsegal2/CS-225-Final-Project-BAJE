@@ -11,6 +11,7 @@ class FlightFinder{
     
     FlightFinder(): g_(true, true) {};
     void read_in_file();
+    void read_in_file(std::string filename);
     double calculate_weights(Vertex orgin, Vertex dest);
     //@return bool if the two places (vertices) are connected
     bool BFS(std::string orgin, std::string destination);
