@@ -18,6 +18,8 @@ class FlightFinder{
     std::vector<std::string> floyd_warshall(std::string orgin, double distance);
     //@return a vector containing the path of airports traveled to along with the distance attached as the last component of the vector
     std::vector <std::string> a_star(std::string orgin, std::string destination);
+    //Reconstruct path helper function for A*. Returns vector of stirngs
+    std::vector <std::string> ReconstructPath(const std::map<Vertex,Vertex>& previous, Vertex curr);
     
     //Test functions
     //return true if greater than the number inputted exist 
@@ -30,8 +32,7 @@ class FlightFinder{
     bool test_edge_exists(Vertex o, Vertex d);
     //return the weight of the edge
     double edge_weight(Vertex o, Vertex d);
-    //Reconstruct path helper function for A*. Returns vector of stirngs
-    std::vector <std::string> ReconstructPath(const std::map<Vertex,Vertex>& previous, Vertex curr);
+
 
     private:
     Graph g_;
