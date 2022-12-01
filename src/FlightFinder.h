@@ -30,6 +30,8 @@ class FlightFinder{
     bool test_edge_exists(Vertex o, Vertex d);
     //return the weight of the edge
     double edge_weight(Vertex o, Vertex d);
+    //Reconstruct path helper function for A*. Returns vector of stirngs
+    std::vector <std::string> ReconstructPath(const std::map<Vertex,Vertex>& previous, Vertex curr);
 
     private:
     Graph g_;
