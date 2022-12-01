@@ -131,3 +131,14 @@ bool FlightFinder::BFS(std::string origin, std::string destination)
     // If BFS is complete without visiting destination
     return false;
 }
+
+
+std::vector <std::string> FlightFinder::ReconstructPath(const std::map<Vertex,Vertex>& previous, Vertex curr){
+  std::vector<std::string> path;
+  path.push_back(curr);
+  while(previous.at(curr).compare("")!=0){
+    curr=previous.at(curr);
+    path.push_back(curr);
+  }
+  return path;
+}
