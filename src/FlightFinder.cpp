@@ -138,7 +138,7 @@ std::vector <std::string> FlightFinder::ReconstructPath(const std::map<Vertex,Ve
   path.push_back(curr);
   while(previous.at(curr).compare("")!=0){
     curr=previous.at(curr);
-    path.push_back(curr);
+    path.insert(path.begin(),curr);
   }
   return path;
 }
