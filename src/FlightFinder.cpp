@@ -146,7 +146,7 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
 
   map<Vertex, double> g_Score;
 
-  for (auto keys : g_Score)
+  for (auto keys : coords)
   {
     g_Score[keys.first] = std::numeric_limits<double>::max();
   }
@@ -155,7 +155,7 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
 
   map<Vertex, double> f_Score;
 
-  for (auto keys : f_Score)
+  for (auto keys : coords)
   {
     f_Score[keys.first] = std::numeric_limits<double>::max();
   }
@@ -168,7 +168,6 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
   {
 
     Vertex current = openSet[0];
-    int currentIdx = 0;
 
     for (size_t i = 0; i < openSet.size(); ++i)
     {
@@ -183,15 +182,8 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
       return ReconstructPath(cameFrom, current);
     }
 
-    for (auto index : openSet)
-    {
-      if (index == current)
-        break;
-      ++currentIdx;
-    }
-
     // openSet should remove current
-    openSet.erase(openSet.begin() + currentIdx - 1);
+    openSet.erase(find(openSet.begin(), openSet.end(), current));
     closedSet.push_back(current);
 
     vector<Vertex> neighbors = g_.getAdjacent(current);
@@ -201,22 +193,25 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
       if (!(std::find(closedSet.begin(), closedSet.end(), neighbor) != closedSet.end()))
       {
         tentative_g_Score = g_Score[current] + g_.getEdgeWeight(current, neighbor);
+      } else {
+        continue;
       }
 
       if (std::find(openSet.begin(), openSet.end(), neighbor) != openSet.end())
       {
         if (tentative_g_Score < g_Score[neighbor])
         {
-          cameFrom[neighbor] = current;
+          // cameFrom[neighbor] = current;
           g_Score[neighbor] = tentative_g_Score;
           f_Score[neighbor] = tentative_g_Score + calculate_weights(neighbor, destination);
         }
-        else
-        {
-          g_Score[neighbor] = tentative_g_Score;
-          openSet.push_back(neighbor);
-        }
       }
+      else
+      {
+        g_Score[neighbor] = tentative_g_Score;
+        openSet.push_back(neighbor);
+      }
+      cameFrom[neighbor] = current;
     }
   }
   return vector<Vertex>();
