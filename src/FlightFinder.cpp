@@ -135,8 +135,6 @@ bool FlightFinder::BFS(std::string origin, std::string destination)
     // If BFS is complete without visiting destination
     return false;
 }
-
-
 std::vector<std::string> FlightFinder::a_star(std::string origin, std::string destination)
 {
   vector<Vertex> openSet;
@@ -147,19 +145,31 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
   map<Vertex, Vertex> cameFrom;
 
   map<Vertex, double> g_Score;
+
+  for (auto keys : g_Score)
+  {
+    g_Score[keys.first] = std::numeric_limits<double>::max();
+  }
+
   g_Score[origin] = 0;
 
-  double tentative_g_Score;
-
   map<Vertex, double> f_Score;
+
+  for (auto keys : f_Score)
+  {
+    f_Score[keys.first] = std::numeric_limits<double>::max();
+  }
+
   f_Score[origin] = calculate_weights(origin, destination);
+
+  double tentative_g_Score;
 
   while (!openSet.empty())
   {
 
     Vertex current = openSet[0];
 
-    for (int i = 0; i < openSet.size(); ++i)
+    for (size_t i = 0; i < openSet.size(); ++i)
     {
       if (f_Score[openSet[i]] < f_Score[current])
       {
@@ -202,6 +212,7 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
   }
   return vector<Vertex>();
 }
+
 
 std::vector<std::string> FlightFinder::ReconstructPath(const std::map<Vertex, Vertex> &previous, Vertex curr)
 {
