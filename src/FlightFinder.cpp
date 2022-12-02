@@ -9,11 +9,11 @@
 using namespace std;
 
 void FlightFinder::read_in_file(){
-  read_in_file("../airports.dat");
+  read_in_file("../airports.dat", "../routes.dat");
 }
 
-void FlightFinder::read_in_file(std::string filename){
-  std::ifstream file(filename);
+void FlightFinder::read_in_file(std::string airportfile, std::string routefile){
+  std::ifstream file(airportfile);
   for(std::string line; std::getline(file, line); line=""){
     std::vector <std::string> vect;
     SplitString(line, ',', vect);
@@ -26,7 +26,7 @@ void FlightFinder::read_in_file(std::string filename){
 
   }
   //edges
-  std::ifstream file2("../routes.dat");
+  std::ifstream file2(routefile);
   for(std::string line; std::getline(file2, line); line=""){
     std::vector <std::string> vect;
     SplitString(line, ',', vect);
