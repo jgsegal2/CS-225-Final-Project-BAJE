@@ -16,7 +16,9 @@
 <b>Running Instructions:</b>
 
  -To run the code first change your directory to the main project direcory using the command "cd CS-225-Final-Project-BAJE-main" in the terminal. Then create a build folder using the command "mkdir build". Then change your directory to the build directory using the command "cd build" and run the "cmake .." command in the terrminal to create the makefiles for the project. From there you can then run either the main or tests using the command "./tests" or "./main" in the terminal. 
-  
+ 
+ -In FlightFinder, ...
+ 
  -The tests created are meant to test every function with many different cases the functions should handle. For a more detailed description of what each test tests, please read the comments in the test_part1.cpp file located in the tests folder.
   
  -The main is the place for the code to be run from the user standpoint.
