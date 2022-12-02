@@ -20,7 +20,6 @@ void FlightFinder::read_in_file(std::string airportfile, std::string routefile){
     if (vect.at(3).compare("\"United States\"")==0 && vect.at(4).compare("\\N") != 0){
       vect.at(4)= vect.at(4).substr(1,vect.at(4).length()-2);
       g_.insertVertex(Vertex(vect.at(4)));
-      //std::cout<< vect.at(4) << std::endl;
       coords[vect.at(4)] = std::pair<double, double> (std::stod(vect.at(6)), std::stod(vect.at(7)));
     }
 
