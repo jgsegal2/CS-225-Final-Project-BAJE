@@ -168,6 +168,7 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
   {
 
     Vertex current = openSet[0];
+    int currentIdx = 0;
 
     for (size_t i = 0; i < openSet.size(); ++i)
     {
@@ -182,7 +183,15 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
       return ReconstructPath(cameFrom, current);
     }
 
-    openSet.erase(openSet.begin());
+    for (auto index : openSet)
+    {
+      if (index == current)
+        break;
+      ++currentIdx;
+    }
+
+    // openSet should remove current
+    openSet.erase(openSet.begin() + currentIdx - 1);
     closedSet.push_back(current);
 
     vector<Vertex> neighbors = g_.getAdjacent(current);
