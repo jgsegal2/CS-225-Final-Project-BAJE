@@ -54,7 +54,7 @@ TEST_CASE("graph data parsing", "[part=1] [vertices] [edges]") {
     // COS to IAD //Washington Dulles
     // COS to IAH //Houston 
     // COS to LAX //Los Angeles
-    // COS to ORD //Orlando
+    // COS to ORD //O'Hare Chicago
     // COS to SFO //San Francisco
     // COS to DFW //Dallas Fort Worth
     // COS to SLC //Salt Lake City 
