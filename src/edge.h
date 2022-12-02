@@ -53,7 +53,7 @@ class Edge
      * @param w - the weight of the edge
      * @param lbl - the edge label
      */
-    Edge(Vertex u, Vertex v, int w, string lbl)
+    Edge(Vertex u, Vertex v, double w, string lbl)
         : source(u), dest(v), label(lbl), weight(w)
     { /* nothing */
     }
