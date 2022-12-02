@@ -194,36 +194,30 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
 
     for (auto neighbor : neighbors)
     {
-      if (!(std::find(closedSet.begin(), closedSet.end(), neighbor) != closedSet.end()))
+      if (std::find(closedSet.begin(), closedSet.end(), neighbor) != closedSet.end())
       {
-        tentative_g_Score = g_Score[current] + g_.getEdgeWeight(current, neighbor);
-      } else {
         continue;
-      }
-
-      if (std::find(openSet.begin(), openSet.end(), neighbor) != openSet.end())
-      {
-        if (tentative_g_Score < g_Score[neighbor])
-        {
-          // cameFrom[neighbor] = current;
-          g_Score[neighbor] = tentative_g_Score;
-          f_Score[neighbor] = tentative_g_Score + calculate_weights(neighbor, destination);
-        }
       }
       else
       {
-        g_Score[neighbor] = tentative_g_Score;
-        f_Score[neighbor] = tentative_g_Score + calculate_weights(neighbor, destination);
-        openSet.push_back(neighbor);
+        tentative_g_Score = g_Score[current] + g_.getEdgeWeight(current, neighbor);
       }
-      cameFrom[neighbor] = current;
+
+      if ((!(std::find(openSet.begin(), openSet.end(), neighbor) != openSet.end())) || tentative_g_Score <= g_Score[neighbor])
+      {
+        cameFrom[neighbor] = current;
+        g_Score[neighbor] = tentative_g_Score;
+        f_Score[neighbor] = g_Score[neighbor] + calculate_weights(neighbor, destination);
+
+        if ((!(std::find(openSet.begin(), openSet.end(), neighbor) != openSet.end())))
+        {
+          openSet.push_back(neighbor);
+        }
+      }
     }
   }
   return vector<Vertex>();
 }
-
-
-
 std::vector<std::string> FlightFinder::ReconstructPath(std::map<Vertex, Vertex> previous, Vertex curr)
 {
   std::vector<std::string> path;
