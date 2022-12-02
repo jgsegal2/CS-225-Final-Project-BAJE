@@ -83,3 +83,19 @@ TEST_CASE("weights", "[part=3] [weights]") {
     REQUIRE(obj.edge_weight("JNU","ANC") < 950.0); //Juneau to Anchorage
 }
 
+TEST_CASE("a_star", "[part=4] [a_star]") {
+    FlightFinder obj;
+    obj.read_in_file("../test_airport.dat", "../test_route.dat");
+
+    std::vector<std::string> astar_result = obj.a_star("LAX", "JFK");
+    std::vector<std::string> expected;
+    expected.push_back("LAX");
+    expected.push_back("DFW");
+    expected.push_back("ORD");
+    expected.push_back("IAD");
+    expected.push_back("JFK");
+
+    REQUIRE(astar_result == expected); 
+}
+
+
