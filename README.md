@@ -8,6 +8,10 @@
 
 -The main data used is in the files airport.dat and routes.dat and is located in the main directory.
 
+-The written report is...
+
+-The project presentation is...
+
 
 <b>Running Instructions:</b>
 
