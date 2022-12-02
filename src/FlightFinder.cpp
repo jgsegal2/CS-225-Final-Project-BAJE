@@ -79,6 +79,10 @@ bool FlightFinder::test_edge_exists(Vertex o, Vertex d){
 double FlightFinder::edge_weight(Vertex o, Vertex d) {
   return g_.getEdgeWeight(o,d);
 }
+// std::vector<std::string> FlightFinder::destinations(Vertex o) {
+//   return g_.getAdjacent(o);
+// }
+
 
 bool FlightFinder::BFS(std::string origin, std::string destination)
 {
@@ -209,6 +213,7 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
       else
       {
         g_Score[neighbor] = tentative_g_Score;
+        f_Score[neighbor] = tentative_g_Score + calculate_weights(neighbor, destination);
         openSet.push_back(neighbor);
       }
       cameFrom[neighbor] = current;
@@ -218,13 +223,14 @@ std::vector<std::string> FlightFinder::a_star(std::string origin, std::string de
 }
 
 
-std::vector<std::string> FlightFinder::ReconstructPath(const std::map<Vertex, Vertex> &previous, Vertex curr)
+
+std::vector<std::string> FlightFinder::ReconstructPath(std::map<Vertex, Vertex> previous, Vertex curr)
 {
   std::vector<std::string> path;
   path.push_back(curr);
-  while (previous.at(curr).compare("") != 0)
+  while (previous[curr].compare("") != 0)
   {
-    curr = previous.at(curr);
+    curr = previous[curr];
     path.insert(path.begin(), curr);
   }
   return path;
