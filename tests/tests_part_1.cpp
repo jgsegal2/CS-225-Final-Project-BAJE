@@ -143,7 +143,7 @@ TEST_CASE("a_star", "[part=4] [a_star]")
     REQUIRE(output4 == expected4);
 }
 
-TEST_CASE("regional start", "[part=4]") {
+TEST_CASE("regional start", "[part=5]") {
     FlightFinder obj;
     obj.read_in_file("../test_airport.dat", "../test_route.dat");
 
