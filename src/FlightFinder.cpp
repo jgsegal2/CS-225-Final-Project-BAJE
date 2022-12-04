@@ -238,3 +238,82 @@ std::vector<std::string> FlightFinder::ReconstructPath(std::map<Vertex, Vertex> 
   path.push_back(to_string(distance));
   return path;
 }
+
+vector<string> FlightFinder::floyd_warshall(string origin, double distance) {
+ // make a map to index through dist matrix using ints instead of vertex names
+  unsigned v = g_.getVertices().size();
+  std::vector<Vertex> vertices = g_.getVertices();
+  //string path[v][v];
+  //vector<vector<string>> dist(v, vector<string>(v, 0));
+
+  vector<vector<double>> next(v, std::vector<double>(v, -1));
+  vector<vector<double>> dp(v, std::vector<double>(v, -1));
+
+  for (unsigned i = 0; i < v; i++) {
+      for (unsigned j = 0; j < v; j++) {
+        if (g_.edgeExists(vertices[i], vertices[j])) {
+          next[i][j] = j;
+          dp[i][j] = g_.getEdgeWeight(vertices[i], vertices[j]);
+        }
+      }
+    }
+  
+  
+  int count = 0;
+  for (unsigned k = 0; k < v; k++) {
+      for (unsigned i = 0; i < v; i++) {
+        for (unsigned j = 0; j < v; j++) {
+          if (dp[i][k] + dp[k][j] < dp[i][j]) {
+            dp[i][j] = dp[i][k] + dp[k][j];
+            next[i][j] = next[i][k];
+            count++;
+            std::cout << count << endl;
+          }
+        }
+      }
+    }
+
+  // use pair
+  vector<std::pair<double, Vertex> > destinations;
+  unsigned int find = std::find(vertices.begin(), vertices.end(), origin) - vertices.begin();
+ 
+  vector<Vertex> final;
+  for (unsigned i=0; i<v; i++) {
+    destinations.push_back(std::pair<double,Vertex>(dp[find][i], vertices.at(i)));
+  }
+
+  sort(destinations.begin(), destinations.end());
+  
+  while (!destinations.empty()) {
+    // for (int i=0; i<10; i++) {
+    //   final.push_back(closest(destinations, distance));
+    //   destinations;
+    // }
+    for (unsigned i = 0; i < destinations.size(); i++) {
+      int countabove = 1;
+      if (destinations[i].first > distance) {
+        final.push_back(destinations[i].second);
+        countabove--;
+        if (countabove == 0) break;
+      }
+    }
+    for (unsigned i = destinations.size(); i >= 0; i--) {
+      int countbelow = 1;
+      if (destinations[i].first < distance) {
+        final.push_back(destinations[i].second);
+        countbelow--;
+        if (countbelow == 0) break;
+      }
+    }
+  }
+
+  
+
+  return final;
+
+
+  
+  
+
+}
+
