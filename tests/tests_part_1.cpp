@@ -79,8 +79,11 @@ TEST_CASE("weights", "[part=3] [weights]") {
     FlightFinder obj;
     obj.read_in_file();
     // Juneau to Anchorage distance = 915.9240554118511 km
-    REQUIRE(obj.edge_weight("JNU","ANC") > 900.0); //Juneau to Anchorage
-    REQUIRE(obj.edge_weight("JNU","ANC") < 950.0); //Juneau to Anchorage
+    REQUIRE(obj.edge_weight("JNU","ANC") > 910.0); //Juneau to Anchorage
+    REQUIRE(obj.edge_weight("JNU","ANC") < 920.0); //Juneau to Anchorage
+    // COS to LAX distance = 1339.2200803268508 km
+    REQUIRE(obj.edge_weight("COS","LAX") > 1330.0); // Colorado Springs to Los Angeles
+    REQUIRE(obj.edge_weight("COS","LAX") < 1350.0); // Colorado Springs to Los Angeles
 }
 
 TEST_CASE("a_star", "[part=4] [a_star]") {
