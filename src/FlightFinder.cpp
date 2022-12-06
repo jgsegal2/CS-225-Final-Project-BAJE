@@ -243,7 +243,14 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance)
 {
   // make a map to index through dist matrix using ints instead of vertex names
   unsigned v = g_.getVertices().size();
-  std::vector<Vertex> vertices = g_.getVertices();
+  
+  std::vector<Vertex> vertices;
+  std::vector<Vertex> all_vertices = g_.getVertices();
+  for (size_t i=0; i<all_vertices.size(); i++){
+    if(g_.getAdjacent(all_vertices.at(i)).size() >40){
+      vertices.push_back(all_vertices.at(i));
+    }
+  }
   // string path[v][v];
   // vector<vector<string>> dist(v, vector<string>(v, 0));
 
