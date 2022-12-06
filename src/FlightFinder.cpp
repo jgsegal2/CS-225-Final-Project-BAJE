@@ -242,18 +242,19 @@ std::vector<std::string> FlightFinder::ReconstructPath(std::map<Vertex, Vertex> 
 vector<string> FlightFinder::floyd_warshall(string origin, double distance)
 {
   // make a map to index through dist matrix using ints instead of vertex names
-  unsigned v = g_.getVertices().size();
   
-  std::vector<Vertex> vertices;
-  std::vector<Vertex> all_vertices = g_.getVertices();
-  for (size_t i=0; i<all_vertices.size(); i++){
-    if(g_.getAdjacent(all_vertices.at(i)).size() >40){
-      vertices.push_back(all_vertices.at(i));
+  
+  std::vector<std::string> vertices;
+  std::vector<std::string> all_vertices = g_.getVertices();
+
+  for(auto neighbors: all_vertices){
+    if(g_.getAdjacent(neighbors).size()>40){
+      vertices.push_back(neighbors);
+
     }
   }
-  // string path[v][v];
-  // vector<vector<string>> dist(v, vector<string>(v, 0));
-
+  unsigned v = vertices.size();
+ 
   vector<vector<double>> next(v, std::vector<double>(v, -1));
   vector<vector<double>> dp(v, std::vector<double>(v, -1));
 
@@ -269,7 +270,6 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance)
     }
   }
 
-  int count = 0;
   for (unsigned k = 0; k < v; k++)
   {
     for (unsigned i = 0; i < v; i++)
@@ -280,8 +280,6 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance)
         {
           dp[i][j] = dp[i][k] + dp[k][j];
           next[i][j] = next[i][k];
-          count++;
-          std::cout << count << endl;
         }
       }
     }
@@ -299,12 +297,7 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance)
 
   sort(destinations.begin(), destinations.end());
 
-  // while (!destinations.empty())
-  //{
-  // for (int i=0; i<10; i++) {
-  //   final.push_back(closest(destinations, distance));
-  //   destinations;
-  // }
+
   for (unsigned i = 0; i < destinations.size(); i++)
   {
     int countabove = 1;
@@ -316,18 +309,21 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance)
         break;
     }
   }
-  for (unsigned i = destinations.size() - 1; i >= 0; i--)
-  {
-    int countbelow = 1;
-    if (destinations[i].first < distance)
-    {
-      final.push_back(destinations[i].second);
-      countbelow--;
-      if (countbelow == 0)
-        break;
+  if(destinations.size()>0){
+      for (size_t i = destinations.size()-1; i !=std::numeric_limits<size_t>::max(); i--){
+        int countbelow = 1;
+        if (destinations[i].first < distance){
+          final.push_back(destinations[i].second);
+          countbelow--;
+          if (countbelow == 0){
+            break;
+          }
+        }
+      }
     }
-  }
-  //}
+
+  return final;
+}
 
   return final;
 }
