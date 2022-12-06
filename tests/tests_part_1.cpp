@@ -148,7 +148,7 @@ TEST_CASE("regional start", "[part=5]") {
     obj.read_in_file("../test_airport.dat", "../test_route.dat");
 
     auto vect = obj.floyd_warshall("DFW", 1300);
-    for(int i=0; i<vect.size(); i++) {
+    for(size_t i=0; i<vect.size(); i++) {
         double dist = obj.calculate_weights("DFW", vect[i]);
         REQUIRE(dist > 1000);
         REQUIRE(dist < 2000);
