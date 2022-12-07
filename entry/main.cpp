@@ -28,7 +28,6 @@ int main(int argc, char* argv[]) {
     }
     
     std::cout<<"\n"<<std::endl;
-    std::cout<<"distance"<< distance <<std::endl;
     std::cout<<"10 Alternative Destinations at Similar Distances (in shortest to longest order) are:"<<std::endl;
     std::vector<Vertex> dests= obj.floyd_warshall(argv[1], distance, 40, 5);
     for(size_t i=0; i<dests.size();i++){
