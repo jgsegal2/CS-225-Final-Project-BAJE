@@ -239,25 +239,24 @@ std::vector<std::string> FlightFinder::ReconstructPath(std::map<Vertex, Vertex> 
   return path;
 }
 
-vector<string> FlightFinder::floyd_warshall(string origin, double distance)
-{
-  // make a map to index through dist matrix using ints instead of vertex names
+vector<string> FlightFinder::floyd_warshall(string origin, double distance, size_t edge_bound, size_t num_back){
   
-  
+  //
   std::vector<std::string> vertices;
   std::vector<std::string> all_vertices = g_.getVertices();
 
+  //loads the airports that have the specfied amount of routes to be subsetted into a new graph and compared to the distance
   for(auto neighbors: all_vertices){
-    if(g_.getAdjacent(neighbors).size()>40){
+    if(g_.getAdjacent(neighbors).size()>edge_bound || neighbors ==origin){
       vertices.push_back(neighbors);
 
     }
   }
+  //
   unsigned v = vertices.size();
- 
   vector<vector<double>> next(v, std::vector<double>(v, -1));
   vector<vector<double>> dp(v, std::vector<double>(v, -1));
-
+  //
   for (unsigned i = 0; i < v; i++)
   {
     for (unsigned j = 0; j < v; j++)
@@ -269,7 +268,7 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance)
       }
     }
   }
-
+  //
   for (unsigned k = 0; k < v; k++)
   {
     for (unsigned i = 0; i < v; i++)
@@ -285,45 +284,64 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance)
     }
   }
 
-  // use pair
+  // 
   vector<std::pair<double, Vertex>> destinations;
   unsigned int find = std::find(vertices.begin(), vertices.end(), origin) - vertices.begin();
 
+  //
   vector<Vertex> final;
-  for (unsigned i = 0; i < v; i++)
-  {
+  for (unsigned i = 0; i < v; i++){
     destinations.push_back(std::pair<double, Vertex>(dp[find][i], vertices.at(i)));
   }
 
   sort(destinations.begin(), destinations.end());
 
-
-  for (unsigned i = 0; i < destinations.size(); i++)
-  {
-    int countabove = 1;
-    if (destinations[i].first > distance)
-    {
-      final.push_back(destinations[i].second);
-      countabove--;
-      if (countabove == 0)
-        break;
+  //finds the location of the index that has the distance we are looking to compare
+  unsigned int distance_idx=0;
+  for (size_t i = 0; i < destinations.size(); i++){
+    if(destinations.at(i).first <= distance){
+      distance_idx=i;
+      break;
     }
   }
-  if(destinations.size()>0){
-      for (size_t i = destinations.size()-1; i !=std::numeric_limits<size_t>::max(); i--){
-        int countbelow = 1;
-        if (destinations[i].first < distance){
-          final.push_back(destinations[i].second);
-          countbelow--;
-          if (countbelow == 0){
-            break;
-          }
-        }
-      }
+  
+  //goes trough and adds the closest num_back airports at a greater distance and add the closest num_back airports at a lower distance to the origin compared with the distance
+  unsigned int num_inserted=0;
+  for(size_t i=0; num_inserted<num_back*2 && i<destinations.size();i++){
+    if(distance_idx+i<destinations.size()){
+      final.push_back(destinations.at(distance_idx+i).second);
+      num_inserted++;
     }
+    if(distance_idx-i >=0 && distance_idx-i<destinations.size()){
+      final.insert(final.begin(),destinations.at(distance_idx-i).second);
+      num_inserted++;
+    }
+  }
 
-  return final;
-}
+  //will delete below code once the above is approved
+  // for (unsigned i = 0; i < destinations.size(); i++)
+  // {
+  //   int countabove = 1;
+  //   if (destinations[i].first > distance)
+  //   {
+  //     final.push_back(destinations[i].second);
+  //     countabove--;
+  //     if (countabove == 0)
+  //       break;
+  //   }
+  // }
+  // if(destinations.size()>0){
+  //     for (size_t i = destinations.size()-1; i !=std::numeric_limits<size_t>::max(); i--){
+  //       int countbelow = 1;
+  //       if (destinations[i].first < distance){
+  //         final.push_back(destinations[i].second);
+  //         countbelow--;
+  //         if (countbelow == 0){
+  //           break;
+  //         }
+  //       }
+  //     }
+  //   }
 
   return final;
 }
