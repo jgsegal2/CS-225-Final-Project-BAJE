@@ -153,24 +153,25 @@ TEST_CASE("regional start", "[part=5]") {
     std::cout << "IAD" << " to DFW Distance should be" << obj.edge_weight("DFW", "ORD") + obj.edge_weight("ORD", "IAD") << std::endl;
     std::cout << "JFK" << " to DFW Distance should be" << obj.edge_weight("DFW", "ORD") + obj.edge_weight("ORD", "IAD") + obj.edge_weight("IAD", "JFK") << std::endl;
 
-
-    auto vect0 = obj.floyd_warshall("DFW", 1300, 0, 1);
-    for(size_t i=0; i< vect0.size(); i++) {
-        double dist = obj.calculate_weights("DFW", vect0[i]);
-        std::cout << vect0[i] << ":" << dist << std::endl;
-    }
+    std::cout << "find one above and one below MCO." << std::endl;
+    auto vect0 = obj.floyd_warshall("DFW", 1582.42, 0, 1);
     REQUIRE(vect0[0] == "ORD");
-    REQUIRE(vect0[1] == "MCO");
+    REQUIRE(vect0[1] == "LAX");
 
-    auto vect1 = obj.floyd_warshall("DFW", 2000, 0, 2);
-    for(size_t i=0; i< vect1.size(); i++) {
-        double dist = obj.calculate_weights("DFW", vect1[i]);
-        std::cout << vect1[i] << ":" << dist << std::endl;
-    }
-    REQUIRE(vect1[0] == "MCO");
-    REQUIRE(vect1[1] == "LAX");
+    std::cout << "find two above and two below LAX." << std::endl;
+    auto vect1 = obj.floyd_warshall("DFW", 1983.18, 0, 2);
+    REQUIRE(vect1[0] == "ORD");
+    REQUIRE(vect1[1] == "MCO");
     REQUIRE(vect1[2] == "IAD");
     REQUIRE(vect1[3] == "JFK");
+
+
+    std::cout << "find two above and two below IAD. Will only return one above and three below." << std::endl;
+    auto vect2 = obj.floyd_warshall("DFW", 2236.05, 0, 2);
+    REQUIRE(vect2[0] == "ORD");
+    REQUIRE(vect2[1] == "MCO");
+    REQUIRE(vect2[2] == "LAX");
+    REQUIRE(vect2[3] == "JFK");
     
 }
     
