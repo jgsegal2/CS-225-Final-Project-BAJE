@@ -154,12 +154,23 @@ TEST_CASE("regional start", "[part=5]") {
     std::cout << "JFK" << " to DFW Distance should be" << obj.edge_weight("DFW", "ORD") + obj.edge_weight("ORD", "IAD") + obj.edge_weight("IAD", "JFK") << std::endl;
 
 
-    auto vect = obj.floyd_warshall("DFW", 1300, 0, 1);
-    for(size_t i=0; i< vect.size(); i++) {
-        double dist = obj.calculate_weights("DFW", vect[i]);
-        std::cout << vect[i] << ":" << dist << std::endl;
-        REQUIRE(dist > 1000);
-        REQUIRE(dist < 2000);
+    auto vect0 = obj.floyd_warshall("DFW", 1300, 0, 1);
+    for(size_t i=0; i< vect0.size(); i++) {
+        double dist = obj.calculate_weights("DFW", vect0[i]);
+        std::cout << vect0[i] << ":" << dist << std::endl;
+    }
+    REQUIRE(vect0[0] == "ORD");
+    REQUIRE(vect0[1] == "MCO");
+
+    auto vect1 = obj.floyd_warshall("DFW", 2000, 0, 2);
+    for(size_t i=0; i< vect1.size(); i++) {
+        double dist = obj.calculate_weights("DFW", vect1[i]);
+        std::cout << vect1[i] << ":" << dist << std::endl;
+    }
+    REQUIRE(vect1[0] == "MCO");
+    REQUIRE(vect1[1] == "LAX");
+    REQUIRE(vect1[2] == "IAD");
+    REQUIRE(vect1[3] == "JFK");
     
 }
     
@@ -186,30 +197,6 @@ TEST_CASE("FW ORD start", "[part=6]") {
     }
     
     
-    std::cout << "DFW" << " to DFW Distance should be" << 0 << std::endl;
-    std::cout << "ORD" << " to DFW Distance should be" << obj.edge_weight("DFW", "ORD") << std::endl;
-    std::cout << "MCO" << " to DFW Distance should be" << obj.edge_weight("DFW", "MCO") << std::endl;
-    std::cout << "LAX" << " to DFW Distance should be" << obj.edge_weight("DFW", "LAX") << std::endl;
-    std::cout << "IAD" << " to DFW Distance should be" << obj.edge_weight("DFW", "ORD") + obj.edge_weight("ORD", "IAD") << std::endl;
-    std::cout << "JFK" << " to DFW Distance should be" << obj.edge_weight("DFW", "ORD") + obj.edge_weight("ORD", "IAD") + obj.edge_weight("IAD", "JFK") << std::endl;
-
-
-    auto vect0 = obj.floyd_warshall("DFW", 1300, 0, 1);
-    for(size_t i=0; i< vect0.size(); i++) {
-        double dist = obj.calculate_weights("DFW", vect0[i]);
-        std::cout << vect0[i] << ":" << dist << std::endl;
-    }
-    REQUIRE(vect0[0] == "ORD");
-    REQUIRE(vect0[1] == "MCO");
-
-    auto vect1 = obj.floyd_warshall("DFW", 2000, 0, 2);
-    for(size_t i=0; i< vect1.size(); i++) {
-        double dist = obj.calculate_weights("DFW", vect1[i]);
-        std::cout << vect1[i] << ":" << dist << std::endl;
-    }
-    REQUIRE(vect1[0] == "MCO");
-    REQUIRE(vect1[1] == "LAX");
-    REQUIRE(vect1[2] == "IAD");
-    REQUIRE(vect1[3] == "JFK");
+    
 
 }
