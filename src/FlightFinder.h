@@ -17,7 +17,7 @@ public:
     //@return bool if the two places (vertices) are connected
     bool BFS(std::string orgin, std::string destination);
     //@return 5 closest lower distances and 5 closest huigher distances based on input
-    std::vector<std::string> floyd_warshall(std::string orgin, double distance);
+    std::vector<std::string> floyd_warshall(std::string orgin, double distance, size_t edge_bound, size_t num_back);
     //@return a vector containing the path of airports traveled to along with the distance attached as the last component of the vector
     std::vector<std::string> a_star(std::string orgin, std::string destination);
     // Reconstruct path helper function for A*. Returns vector of stirngs
