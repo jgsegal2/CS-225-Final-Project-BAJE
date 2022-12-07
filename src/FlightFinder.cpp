@@ -254,8 +254,8 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance, size
   }
   //
   unsigned v = vertices.size();
-  vector<vector<double>> next(v, std::vector<double>(v, -1));
-  vector<vector<double>> dp(v, std::vector<double>(v, -1));
+  vector<vector<double>> next(v, std::vector<double>(v, __DBL_MAX__));
+  vector<vector<double>> dp(v, std::vector<double>(v, __DBL_MAX__));
   //
   for (unsigned i = 0; i < v; i++)
   {
@@ -283,6 +283,9 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance, size
       }
     }
   }
+  for (size_t i = 0; i < dp.size(); i++) {
+    dp[i][i] = 0;
+  }
 
   // 
   vector<std::pair<double, Vertex>> destinations;
@@ -306,7 +309,7 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance, size
   }
   
   for (size_t i=0; i<destinations.size();i++){
-    std::cout<<destinations.at(i).first<< " "<< destinations.at(i).second<<std::endl;
+    //std::cout<<destinations.at(i).first<< " "<< destinations.at(i).second<<std::endl;
   }
   //goes through and adds the closest num_back airports at a greater distance and add the closest num_back airports at a lower distance to the origin compared with the distance
   unsigned int num_inserted=0;
