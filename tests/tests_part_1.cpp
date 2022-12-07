@@ -149,7 +149,7 @@ TEST_CASE("regional start", "[part=5]") {
 
     auto vect = obj.floyd_warshall("DFW", 1300);
     for(size_t i=0; i<vect.size(); i++) {
-        double dist = obj.calculate_weights("DFW", vect[i]);
+        double dist = obj.calculate_weights("DFW", vect[i], 0, 1);
         REQUIRE(dist > 1000);
         REQUIRE(dist < 2000);
     }
