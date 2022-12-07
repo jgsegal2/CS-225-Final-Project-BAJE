@@ -305,9 +305,12 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance, size
     }
   }
   
-  //goes trough and adds the closest num_back airports at a greater distance and add the closest num_back airports at a lower distance to the origin compared with the distance
+  for (size_t i=0; i<destinations.size();i++){
+    std::cout<<destinations.at(i).first<< " "<< destinations.at(i).second<<std::endl;
+  }
+  //goes through and adds the closest num_back airports at a greater distance and add the closest num_back airports at a lower distance to the origin compared with the distance
   unsigned int num_inserted=0;
-  for(size_t i=0; num_inserted<num_back*2 && i<destinations.size();i++){
+  for(size_t i=1; num_inserted<num_back*2 && i<=destinations.size();i++){
     if(distance_idx+i<destinations.size()){
       final.push_back(destinations.at(distance_idx+i).second);
       num_inserted++;
@@ -318,30 +321,6 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance, size
     }
   }
 
-  //will delete below code once the above is approved
-  // for (unsigned i = 0; i < destinations.size(); i++)
-  // {
-  //   int countabove = 1;
-  //   if (destinations[i].first > distance)
-  //   {
-  //     final.push_back(destinations[i].second);
-  //     countabove--;
-  //     if (countabove == 0)
-  //       break;
-  //   }
-  // }
-  // if(destinations.size()>0){
-  //     for (size_t i = destinations.size()-1; i !=std::numeric_limits<size_t>::max(); i--){
-  //       int countbelow = 1;
-  //       if (destinations[i].first < distance){
-  //         final.push_back(destinations[i].second);
-  //         countbelow--;
-  //         if (countbelow == 0){
-  //           break;
-  //         }
-  //       }
-  //     }
-  //   }
-
   return final;
 }
+
