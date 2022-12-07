@@ -146,12 +146,19 @@ TEST_CASE("a_star", "[part=4] [a_star]")
 TEST_CASE("regional start", "[part=5]") {
     FlightFinder obj;
     obj.read_in_file("../test_airport.dat", "../test_route.dat");
+    std::cout << "DFW" << " to DFW Distance should be" << 0 << std::endl;
+    std::cout << "ORD" << " to DFW Distance should be" << obj.edge_weight("DFW", "ORD") << std::endl;
+    std::cout << "MCO" << " to DFW Distance should be" << obj.edge_weight("DFW", "MCO") << std::endl;
+    std::cout << "LAX" << " to DFW Distance should be" << obj.edge_weight("DFW", "LAX") << std::endl;
+    std::cout << "IAD" << " to DFW Distance should be" << obj.edge_weight("DFW", "ORD") + obj.edge_weight("ORD", "IAD") << std::endl;
+    std::cout << "JFK" << " to DFW Distance should be" << obj.edge_weight("DFW", "ORD") + obj.edge_weight("ORD", "IAD") + obj.edge_weight("IAD", "JFK") << std::endl;
 
-    auto vect = obj.floyd_warshall("DFW", 1300);
-    for(size_t i=0; i<vect.size(); i++) {
-        double dist = obj.calculate_weights("DFW", vect[i], 0, 1);
+
+    auto vect = obj.floyd_warshall("DFW", 1300, 0, 1);
+    for(size_t i=0; i< vect.size(); i++) {
+        double dist = obj.calculate_weights("DFW", vect[i]);
+        std::cout << vect[i] << ":" << dist << std::endl;
         REQUIRE(dist > 1000);
         REQUIRE(dist < 2000);
-    }
     
 }
