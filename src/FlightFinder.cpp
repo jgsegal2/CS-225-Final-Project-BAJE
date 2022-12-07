@@ -241,7 +241,7 @@ std::vector<std::string> FlightFinder::ReconstructPath(std::map<Vertex, Vertex> 
 
 vector<string> FlightFinder::floyd_warshall(string origin, double distance, size_t edge_bound, size_t num_back){
   
-  //
+  //creates an emoty Vertex list and a Vertex list with all verticies
   std::vector<std::string> vertices;
   std::vector<std::string> all_vertices = g_.getVertices();
 
@@ -252,11 +252,11 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance, size
 
     }
   }
-  //
+  //sets up variables for Floyd-Warshall algorithm
   unsigned v = vertices.size();
   vector<vector<double>> next(v, std::vector<double>(v, __DBL_MAX__));
   vector<vector<double>> dp(v, std::vector<double>(v, __DBL_MAX__));
-  //
+  //sets up edges that already exist in the graph
   for (unsigned i = 0; i < v; i++)
   {
     for (unsigned j = 0; j < v; j++)
@@ -268,7 +268,7 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance, size
       }
     }
   }
-  //
+  // Meat of FLoyd Warshall algorithm
   for (unsigned k = 0; k < v; k++)
   {
     for (unsigned i = 0; i < v; i++)
@@ -283,15 +283,16 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance, size
       }
     }
   }
-  for (size_t i = 0; i < dp.size(); i++) {
-    dp[i][i] = 0;
+  //sets reflexive edges to zero
+  for (size_t i=0; i< dp.size(); i++){
+    dp[i][i]=0;
   }
 
-  // 
+  // find the index at which the vertex that is the origin is stored 
   vector<std::pair<double, Vertex>> destinations;
   unsigned int find = std::find(vertices.begin(), vertices.end(), origin) - vertices.begin();
 
-  //
+  //pathways from origin to every vertex in graph calculated and then sorted from shortest to longest
   vector<Vertex> final;
   for (unsigned i = 0; i < v; i++){
     destinations.push_back(std::pair<double, Vertex>(dp[find][i], vertices.at(i)));
@@ -302,23 +303,20 @@ vector<string> FlightFinder::floyd_warshall(string origin, double distance, size
   //finds the location of the index that has the distance we are looking to compare
   unsigned int distance_idx=0;
   for (size_t i = 0; i < destinations.size(); i++){
-    if(destinations.at(i).first <= distance){
+    if((int) destinations.at(i).first == (int) distance){ //comparison of doubles need to be cast to ints for proper comparison
       distance_idx=i;
       break;
     }
   }
-  
-  for (size_t i=0; i<destinations.size();i++){
-    //std::cout<<destinations.at(i).first<< " "<< destinations.at(i).second<<std::endl;
-  }
+
   //goes through and adds the closest num_back airports at a greater distance and add the closest num_back airports at a lower distance to the origin compared with the distance
   unsigned int num_inserted=0;
   for(size_t i=1; num_inserted<num_back*2 && i<=destinations.size();i++){
-    if(distance_idx+i<destinations.size()){
+    if(distance_idx+i<destinations.size()){ //adds vertex at higher distance
       final.push_back(destinations.at(distance_idx+i).second);
       num_inserted++;
     }
-    if(distance_idx-i >=0 && distance_idx-i<destinations.size()){
+    if(distance_idx-i >=0 && distance_idx-i<destinations.size()){ //adds vertex at lower distance
       final.insert(final.begin(),destinations.at(distance_idx-i).second);
       num_inserted++;
     }
