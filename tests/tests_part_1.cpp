@@ -177,6 +177,7 @@ TEST_CASE("regional start", "[part=5]") {
 TEST_CASE("FW ORD start", "[part=6]") {
     FlightFinder obj;
     obj.read_in_file("../test_airport.dat", "../test_route.dat");
+    //final three do not have direct flights based on the graph built from the test files read above
     std::cout << "ORD" << " to ORD Distance should be" << 0 << std::endl;
     std::cout << "ORD" << " to IAD Distance should be" << obj.edge_weight("ORD", "IAD") << std::endl;
     std::cout << "ORD" << " to DFW Distance should be" << obj.edge_weight("ORD", "DFW") << std::endl;
@@ -187,14 +188,18 @@ TEST_CASE("FW ORD start", "[part=6]") {
     //chicago to IAD and DFW only direct flights
 
 
-    auto vect = obj.floyd_warshall("ORD", 1300, 0, 1);
+    auto vect = obj.floyd_warshall("ORD", 1290.65, 0, 1);
     for(size_t i=0; i< vect.size(); i++) {
         double dist = obj.calculate_weights("ORD", vect[i]);
         std::cout << vect[i] << ":" << dist << std::endl;
-        // REQUIRE(dist > 1000);
-        // REQUIRE(dist < 2000);
-    
+        
+        
     }
+    //inputting the distance of 1290.65 so we should get one below and one above according to outputs above
+    REQUIRE(vect[0] == "IAD");
+    REQUIRE(vect[1] == "JFK");
+
+}
     
     
     
